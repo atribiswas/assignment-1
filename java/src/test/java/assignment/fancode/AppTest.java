@@ -61,8 +61,31 @@ public class AppTest {
         Logic.filterUsersWithToDos(userBody, todoBody);
         LoggerSingleton.logger.info("Filtered by TODO existence");
 
-        LoggerSingleton.logger.debug(String.format("Users after filering %s", userBody.toString()));
+        LoggerSingleton.logger.debug(String.format("Users after filering by Todo and City %s", userBody.toString()));
 
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+        LoggerSingleton.logger
+                .info(String.format("Average tasks done by filtered users: %s", Logic.takeOutAverage(userBody)));
+
+        // Checking for percentage completion
+        Logic.filterusersByPercCompletion(userBody, Constants.threshold);
+        LoggerSingleton.logger.debug(String.format("Users after filering by percCompletion %s", userBody.toString()));
+
+        LoggerSingleton.logger
+                .info(String.format("Number of users who have completed less than %s completion: %s",
+                        Constants.threshold, userBody.size()));
+
+        // Final Check
+        if (userBody.size() != 0) {
+            LoggerSingleton.logger.error(String.format(
+                    "FAILED - ALL the users who have done todos in cities %s have NOT completed %s percent of todos (There may be few who have)",
+                    Arrays.toString(Constants.cities), Double.toString(Constants.threshold * 100)));
+            Assert.assertTrue(false);
+        }
+
+        else {
+            LoggerSingleton.logger.info(String.format(
+                    "SUCCESS - ALL the users who have done todos in cities %s have completed %s percent of todos",
+                    Constants.cities.toString(), Double.toString(Constants.threshold * 100)));
+        }
     }
 }
