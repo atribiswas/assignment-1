@@ -1,0 +1,10 @@
+{
+    "total_users": 2,
+    "overall_perc_tasks_completed": 0.47500000000000003,
+    "users_above_threshold": [
+        "Bret"
+    ],
+    "users_below_threshold": [
+        "Antonette"
+    ]
+}

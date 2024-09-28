@@ -1,15 +1,18 @@
 {
     "resources": {
-        "host": "",
-        "todo_path": "",
-        "posts_path": "",
-        "comments_path": "",
-        "album_path": "",
-        "photos_path": "",
-        "users_path": "",
+        "host": "http://jsonplaceholder.typicode.com",
+        "todo_path": "todos",
+        "posts_path": "posts",
+        "comments_path": "comments",
+        "album_path": "album",
+        "photos_path": "photos",
+        "users_path": "users",
         "auth_token": null
     },
-    "city_check": "",
+    "city_check": [
+        "Gwenborough",
+        "Wisokyburgh"
+    ],
     "task_cutoff_perc": 0.5,
-    "output_file_path": "data/output/"
+    "output_file": "data/output/output.json"
 }
