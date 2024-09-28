@@ -4,11 +4,17 @@
 package assignment.fancode;
 
 import org.testng.annotations.*;
+
+import assignment.fancode.utils.Constants;
+import assignment.fancode.utils.LoggerSingleton;
+
 import static org.testng.Assert.*;
 
 public class AppTest {
-    @Test public void appHasAGreeting() {
+    @Test
+    public void appHasAGreeting() {
         App classUnderTest = new App();
+        LoggerSingleton.logger.info(Constants.whatAreMyConstants());
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
     }
 }
