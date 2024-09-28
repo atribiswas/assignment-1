@@ -5,8 +5,11 @@ package assignment.fancode;
 
 import org.testng.annotations.*;
 
+import assignment.fancode.paths.ToDo;
+import assignment.fancode.paths.Users;
 import assignment.fancode.utils.Constants;
 import assignment.fancode.utils.LoggerSingleton;
+import io.restassured.response.Response;
 
 import static org.testng.Assert.*;
 
@@ -15,6 +18,23 @@ public class AppTest {
     public void appHasAGreeting() {
         App classUnderTest = new App();
         LoggerSingleton.logger.info(Constants.whatAreMyConstants());
+
+        try {
+            Response userResponse = Users.getUsers();
+            LoggerSingleton.logger.info("Got users from api");
+            LoggerSingleton.logger.debug(String.format("Got users %s", userResponse.getBody().asPrettyString()));
+        } catch (Exception e) {
+            LoggerSingleton.logger.error(String.format("Error getting user list %s", e.getMessage()));
+        }
+
+        try {
+            Response todoResponse = ToDo.getToDos();
+            LoggerSingleton.logger.info("Got todos from api");
+            LoggerSingleton.logger.debug(String.format("Got todos %s", todoResponse.getBody().asPrettyString()));
+        } catch (Exception e) {
+            LoggerSingleton.logger.error(String.format("Error getting todo list %s", e.getMessage()));
+        }
+
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
     }
 }
