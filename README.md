@@ -1,4 +1,4 @@
-# Assignment submission
+# Assignment submission (Initial push - 28 Sep 11am)
 
 ## About the assignment
 - Scenario :- All the users of City `FanCode` should have more than half of their todos task completed.
@@ -64,4 +64,22 @@ The file looks like this
         "Antonette"
     ]
 }
+```
+
+# UPDATE (28 Sep 6pm)
+
+## What's New? **Java version of the same script**
+
+Change directories into java folder to run the same test *in java*
+```
+cd java/
+./gradlew build
+```
+
+## Dependencies
+```
+Java version 11
+Rest-Assured
+Log4J
+TestNG
 ```
