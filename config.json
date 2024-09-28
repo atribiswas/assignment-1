@@ -1,0 +1,15 @@
+{
+    "resources": {
+        "host": "",
+        "todo_path": "",
+        "posts_path": "",
+        "comments_path": "",
+        "album_path": "",
+        "photos_path": "",
+        "users_path": "",
+        "auth_token": null
+    },
+    "city_check": "",
+    "task_cutoff_perc": 0.5,
+    "output_file_path": "data/output/"
+}
