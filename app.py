@@ -4,6 +4,7 @@ import os
 import sys
 import requests
 
+#Setup
 arguments = sys.argv[1:]
 # arguments = ["config.json", "DEBUG"]
 if len(arguments) != 2:
@@ -15,6 +16,7 @@ logging_level = logging.DEBUG if arguments[1] == "DEBUG" else logging.INFO
 logging.basicConfig(level=logging_level,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
+#Using configurations as constants
 class Constants:
     def __init__(self, config_json):
         self.host : str = config_json['resources']['host']
