@@ -3,37 +3,65 @@
  */
 package assignment.fancode;
 
+import org.testng.Assert;
 import org.testng.annotations.*;
 
 import assignment.fancode.paths.ToDo;
 import assignment.fancode.paths.Users;
 import assignment.fancode.utils.Constants;
 import assignment.fancode.utils.LoggerSingleton;
+import assignment.fancode.utils.Logic;
 import io.restassured.response.Response;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.testng.Assert.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class AppTest {
     @Test
     public void appHasAGreeting() {
-        App classUnderTest = new App();
-        LoggerSingleton.logger.info(Constants.whatAreMyConstants());
 
+        App classUnderTest = new App();
+        // Check
+        // LoggerSingleton.logger.info(Constants.whatAreMyConstants());
+
+        // Get the data
+        ObjectMapper mapper = new ObjectMapper();
+        List<Map<String, Object>> userBody = null;
+        List<Map<String, Object>> todoBody = null;
         try {
             Response userResponse = Users.getUsers();
+            userBody = mapper.readValue(userResponse.getBody().asString(), List.class);
             LoggerSingleton.logger.info("Got users from api");
-            LoggerSingleton.logger.debug(String.format("Got users %s", userResponse.getBody().asPrettyString()));
+            LoggerSingleton.logger.debug(String.format("Got users %s", userBody.toString()));
         } catch (Exception e) {
             LoggerSingleton.logger.error(String.format("Error getting user list %s", e.getMessage()));
         }
 
         try {
             Response todoResponse = ToDo.getToDos();
+            todoBody = mapper.readValue(todoResponse.getBody().asString(), List.class);
             LoggerSingleton.logger.info("Got todos from api");
-            LoggerSingleton.logger.debug(String.format("Got todos %s", todoResponse.getBody().asPrettyString()));
+            LoggerSingleton.logger.debug(String.format("Got todos %s", todoBody.toString()));
         } catch (Exception e) {
             LoggerSingleton.logger.error(String.format("Error getting todo list %s", e.getMessage()));
         }
+        Assert.assertNotNull(userBody, "Exiting - Null response from TODO");
+        Assert.assertNotNull(todoBody, "Exiting - Null response from USERS");
+
+        // Remove users who don't belong to specified sity
+        Logic.filterusersByCities(userBody, new ArrayList<>(Arrays.asList(Constants.cities)));
+        LoggerSingleton.logger.info("Filtered by City");
+
+        // Remove users who don't have ToDos
+        Logic.filterUsersWithToDos(userBody, todoBody);
+        LoggerSingleton.logger.info("Filtered by TODO existence");
+
+        LoggerSingleton.logger.debug(String.format("Users after filering %s", userBody.toString()));
 
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
     }
